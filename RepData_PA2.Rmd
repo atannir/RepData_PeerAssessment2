@@ -1,0 +1,24 @@
+---
+title: "Reproducible Research: Peer Assessment 2: Storm Damage"
+output: 
+  html_document: 
+    keep_md: yes
+---
+<!-- Check for data, download, unpack -->
+<!-- We have added the file to the git ignore because it is 47 MB compressed, 535 MB expanded. -->
+
+<!-- This assignment should have a max of 3 figures, which may contain multiple plots, but still only 3 figures -->
+
+```{r echo=FALSE, cache=TRUE}
+if(!file.exists("repdata_data_StormData.csv")) {
+  if(!file.exists("repdata_data_StormData.csv.bz2")) {
+    download.file("https://d396qusza40orc.cloudfront.net/repdata%2Fdata%2FStormData.csv.bz2", "repdata_data_StormData.csv.bz2", quiet = TRUE)
+  }
+  # unzip("repdata_data_StormData.csv.bz2")
+  # error, will deal with automation later.
+}
+
+raw_csv <- read.csv("repdata_data_StormData.csv")
+# 37 variables, 902297 observations, caching is very helpful here.
+```
+

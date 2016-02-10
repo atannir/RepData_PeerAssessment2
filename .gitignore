@@ -15,3 +15,4 @@ vignettes/*.pdf
 .Rproj.user
 repdata_data_StormData.csv
 repdata_data_StormData.csv.bz2
+RepData_PA2_cache/
