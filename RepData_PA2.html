@@ -67,6 +67,66 @@ img {
 <!-- Check for data, download, unpack -->
 <!-- We have added the file to the git ignore because it is 47 MB compressed, 535 MB expanded. -->
 <!-- This assignment should have a max of 3 figures, which may contain multiple plots, but still only 3 figures -->
+<!-- The underlying questions are simple:
+Across the US, Which types of events (EVTYPE) were most harmful to population health?
+Across the US, which types of events have the greatest economic consequences?
+-->
+<pre class="r"><code>if(!file.exists(&quot;repdata_data_StormData.csv&quot;)) {
+  if(!file.exists(&quot;repdata_data_StormData.csv.bz2&quot;)) {
+    download.file(&quot;https://d396qusza40orc.cloudfront.net/repdata%2Fdata%2FStormData.csv.bz2&quot;, &quot;repdata_data_StormData.csv.bz2&quot;, quiet = TRUE)
+  }
+  # unzip(&quot;repdata_data_StormData.csv.bz2&quot;)
+  # error, but worked last assignment on a .zip...
+}
+
+
+csvSample &lt;- read.csv(&quot;repdata_data_StormData.csv&quot;, header = TRUE, nrows = 100)
+csvSampleClasses = sapply(csvSample, class)
+#csvSampleClasses[&quot;BGN_DATE&quot;] &lt;- &quot;Date&quot;
+# csvSampleClasses[&quot;BGN_TIME&quot;] &lt;- &quot;numeric&quot; #hopefully will fix issue with leading zeros
+## automatic generation for small sample
+##    STATE__   BGN_DATE   BGN_TIME  TIME_ZONE     COUNTY COUNTYNAME 
+##  &quot;numeric&quot;   &quot;factor&quot;  &quot;integer&quot;   &quot;factor&quot;  &quot;numeric&quot;   &quot;factor&quot; 
+##      STATE     EVTYPE  BGN_RANGE    BGN_AZI BGN_LOCATI   END_DATE 
+##   &quot;factor&quot;   &quot;factor&quot;  &quot;numeric&quot;  &quot;logical&quot;  &quot;logical&quot;  &quot;logical&quot; 
+##   END_TIME COUNTY_END COUNTYENDN  END_RANGE    END_AZI END_LOCATI 
+##  &quot;logical&quot;  &quot;numeric&quot;  &quot;logical&quot;  &quot;numeric&quot;  &quot;logical&quot;  &quot;logical&quot; 
+##     LENGTH      WIDTH          F        MAG FATALITIES   INJURIES 
+##  &quot;numeric&quot;  &quot;numeric&quot;  &quot;integer&quot;  &quot;numeric&quot;  &quot;numeric&quot;  &quot;numeric&quot; 
+##    PROPDMG PROPDMGEXP    CROPDMG CROPDMGEXP        WFO STATEOFFIC 
+##  &quot;numeric&quot;   &quot;factor&quot;  &quot;numeric&quot;  &quot;logical&quot;   &quot;factor&quot;  &quot;logical&quot; 
+##  ZONENAMES   LATITUDE  LONGITUDE LATITUDE_E LONGITUDE_    REMARKS 
+##  &quot;logical&quot;  &quot;numeric&quot;  &quot;numeric&quot;  &quot;numeric&quot;  &quot;numeric&quot;  &quot;logical&quot; 
+##     REFNUM 
+##  &quot;numeric&quot;
+
+# one strategy is to disregard events before 2000 when the classification method changed.
+
+#raw_csv &lt;- read.csv(&quot;repdata_data_StormData.csv&quot;, header = TRUE ) #,
+                    #colClasses = csvSampleClasses)
+
+# classes &lt;- sapply(raw_csv, class)
+# classes
+
+## automatically generated classes, not ideal for most. Use &quot;NULL&quot; to skip a column.
+##    STATE__   BGN_DATE   BGN_TIME  TIME_ZONE     COUNTY COUNTYNAME 
+##  &quot;numeric&quot;   &quot;factor&quot;   &quot;factor&quot;   &quot;factor&quot;  &quot;numeric&quot;   &quot;factor&quot; 
+##      STATE     EVTYPE  BGN_RANGE    BGN_AZI BGN_LOCATI   END_DATE 
+##   &quot;factor&quot;   &quot;factor&quot;  &quot;numeric&quot;   &quot;factor&quot;   &quot;factor&quot;   &quot;factor&quot; 
+##   END_TIME COUNTY_END COUNTYENDN  END_RANGE    END_AZI END_LOCATI 
+##   &quot;factor&quot;  &quot;numeric&quot;  &quot;logical&quot;  &quot;numeric&quot;   &quot;factor&quot;   &quot;factor&quot; 
+##     LENGTH      WIDTH          F        MAG FATALITIES   INJURIES 
+##  &quot;numeric&quot;  &quot;numeric&quot;  &quot;integer&quot;  &quot;numeric&quot;  &quot;numeric&quot;  &quot;numeric&quot; 
+##    PROPDMG PROPDMGEXP    CROPDMG CROPDMGEXP        WFO STATEOFFIC 
+##  &quot;numeric&quot;   &quot;factor&quot;  &quot;numeric&quot;   &quot;factor&quot;   &quot;factor&quot;   &quot;factor&quot; 
+##  ZONENAMES   LATITUDE  LONGITUDE LATITUDE_E LONGITUDE_    REMARKS 
+##   &quot;factor&quot;  &quot;numeric&quot;  &quot;numeric&quot;  &quot;numeric&quot;  &quot;numeric&quot;   &quot;factor&quot; 
+##     REFNUM 
+##  &quot;numeric&quot;
+
+remove(csvSample)
+remove(csvSampleClasses)
+# 37 variables, 902297 observations, caching is very helpful here.</code></pre>
 
 
 </div>
