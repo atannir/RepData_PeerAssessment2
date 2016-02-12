@@ -25,8 +25,8 @@ if(!file.exists("repdata_data_StormData.csv")) {
 }
 
 
-csvSample <- read.csv("repdata_data_StormData.csv", header = TRUE, nrows = 100)
-csvSampleClasses = sapply(csvSample, class)
+csvSample <- read.csv("repdata_data_StormData.csv", header = TRUE, nrows = 1000)
+csc = sapply(csvSample, class)
 #csvSampleClasses["BGN_DATE"] <- "Date"
 # csvSampleClasses["BGN_TIME"] <- "numeric" #hopefully will fix issue with leading zeros
 ## automatic generation for small sample
@@ -45,10 +45,24 @@ csvSampleClasses = sapply(csvSample, class)
 ##     REFNUM 
 ##  "numeric"
 
+## http://stackoverflow.com/questions/13022299/specify-date-format-for-colclasses-argument-in-read-table-read-csv
+## setAs("character","myDate", function(from) as.Date(from, format="%d/%m/%Y") )
+## tmp <- c("1, 15/08/2008", "2, 23/05/2010")
+## con <- textConnection(tmp)
+## tmp2 <- read.csv(con, colClasses=c('numeric','myDate'), header=FALSE)
+## str(tmp2)
+
+csc = c("NULL", "NULL", "NULL", "NULL", "NULL", "NULL", "NULL", "NULL", "NULL", "NULL", 
+        "NULL", "NULL", "NULL", "NULL", "NULL", "NULL", "NULL", "NULL", "NULL", "NULL", 
+        "NULL", "NULL", "NULL", "NULL", "NULL", "NULL", "NULL", "NULL", "NULL", "NULL",
+        "NULL", "NULL", "NULL", "NULL", "NULL", "NULL", "NULL")
+
+
 # one strategy is to disregard events before 2000 when the classification method changed.
 
-#raw_csv <- read.csv("repdata_data_StormData.csv", header = TRUE ) #,
-                    #colClasses = csvSampleClasses)
+raw_csv <- read.csv("repdata_data_StormData.csv", header = TRUE, colClasses = csc,
+                    nrows = 1000)
+
 
 # classes <- sapply(raw_csv, class)
 # classes
@@ -70,7 +84,8 @@ csvSampleClasses = sapply(csvSample, class)
 ##  "numeric"
 
 remove(csvSample)
-remove(csvSampleClasses)
+remove(csc)
+
 # 37 variables, 902297 observations, caching is very helpful here.
 ```
 

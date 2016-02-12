@@ -21,8 +21,8 @@ if(!file.exists("repdata_data_StormData.csv")) {
 }
 
 
-csvSample <- read.csv("repdata_data_StormData.csv", header = TRUE, nrows = 100)
-csvSampleClasses = sapply(csvSample, class)
+csvSample <- read.csv("repdata_data_StormData.csv", header = TRUE, nrows = 1000)
+csc = sapply(csvSample, class)
 #csvSampleClasses["BGN_DATE"] <- "Date"
 # csvSampleClasses["BGN_TIME"] <- "numeric" #hopefully will fix issue with leading zeros
 ## automatic generation for small sample
@@ -41,11 +41,25 @@ csvSampleClasses = sapply(csvSample, class)
 ##     REFNUM 
 ##  "numeric"
 
+csc = c("NULL", "NULL", "NULL", "NULL", "NULL", "NULL", "NULL", "NULL", "NULL", "NULL", 
+        "NULL", "NULL", "NULL", "NULL", "NULL", "NULL", "NULL", "NULL", "NULL", "NULL", 
+        "NULL", "NULL", "NULL", "NULL", "NULL", "NULL", "NULL", "NULL", "NULL", "NULL",
+        "NULL", "NULL", "NULL", "NULL", "NULL", "NULL", "NULL")
+
+
 # one strategy is to disregard events before 2000 when the classification method changed.
 
-#raw_csv <- read.csv("repdata_data_StormData.csv", header = TRUE ) #,
-                    #colClasses = csvSampleClasses)
+raw_csv <- read.csv("repdata_data_StormData.csv", header = TRUE, colClasses = csc,
+                    nrows = 1000)
 
+raw_csv
+```
+
+```
+## data frame with 0 columns and 0 rows
+```
+
+```r
 # classes <- sapply(raw_csv, class)
 # classes
 
@@ -66,7 +80,8 @@ csvSampleClasses = sapply(csvSample, class)
 ##  "numeric"
 
 remove(csvSample)
-remove(csvSampleClasses)
+remove(csc)
+
 # 37 variables, 902297 observations, caching is very helpful here.
 ```
 
