@@ -41,28 +41,38 @@ csc = sapply(csvSample, class)
 ##     REFNUM 
 ##  "numeric"
 
-csc = c("NULL", "NULL", "NULL", "NULL", "NULL", "NULL", "NULL", "NULL", "NULL", "NULL", 
-        "NULL", "NULL", "NULL", "NULL", "NULL", "NULL", "NULL", "NULL", "NULL", "NULL", 
-        "NULL", "NULL", "NULL", "NULL", "NULL", "NULL", "NULL", "NULL", "NULL", "NULL",
+## http://stackoverflow.com/questions/13022299/specify-date-format-for-colclasses-argument-in-read-table-read-csv
+setClass('myDate')
+setAs("character","myDate", function(from) as.Date(from, format="%m/%d/%Y") )
+## tmp <- c("1, 15/08/2008", "2, 23/05/2010")
+## con <- textConnection(tmp)
+## tmp2 <- read.csv(con, colClasses=c('numeric','myDate'), header=FALSE)
+## str(tmp2)
+
+csc = c("NULL", "myDate", "NULL", "NULL", "numeric", "factor",
+        "factor", "factor", "NULL", "NULL", "NULL", "NULL",
+        "NULL", "NULL", "NULL", "NULL", "NULL", "NULL",
+        "NULL", "NULL", "NULL", "NULL", "NULL", "NULL",
+        "NULL", "NULL", "NULL", "NULL", "NULL", "NULL",
         "NULL", "NULL", "NULL", "NULL", "NULL", "NULL", "NULL")
 
 
 # one strategy is to disregard events before 2000 when the classification method changed.
 
 raw_csv <- read.csv("repdata_data_StormData.csv", header = TRUE, colClasses = csc,
-                    nrows = 1000)
+                    nrows = 10000)
 
-raw_csv
+
+ classes <- sapply(raw_csv, class)
+ classes
 ```
 
 ```
-## data frame with 0 columns and 0 rows
+##   BGN_DATE     COUNTY COUNTYNAME      STATE     EVTYPE 
+##     "Date"  "numeric"   "factor"   "factor"   "factor"
 ```
 
 ```r
-# classes <- sapply(raw_csv, class)
-# classes
-
 ## automatically generated classes, not ideal for most. Use "NULL" to skip a column.
 ##    STATE__   BGN_DATE   BGN_TIME  TIME_ZONE     COUNTY COUNTYNAME 
 ##  "numeric"   "factor"   "factor"   "factor"  "numeric"   "factor" 
